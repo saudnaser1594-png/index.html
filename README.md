@@ -57,3 +57,35 @@
 
 </body>
 </html>
+<script>
+    const taskInput = document.querySelector('.task-input input');
+    const addBtn = document.querySelector('.task-input button');
+    const taskList = document.querySelector('.task-list');
+
+    // وظيفة إضافة مهمة
+    addBtn.addEventListener('click', () => {
+        const taskText = taskInput.value;
+
+        if (taskText.trim() !== "") {
+            // إنشاء عنصر المهمة
+            const taskItem = document.createElement('div');
+            taskItem.classList.add('task-item');
+            
+            taskItem.innerHTML = `
+                <div>
+                    <strong>${taskText}</strong>
+                    <p style="margin: 5px 0 0; font-size: 0.8rem; color: #666;">الحالة: مضافة حديثاً</p>
+                </div>
+                <button class="delete-btn" onclick="this.parentElement.remove()">حذف</button>
+            `;
+
+            // إضافة المهمة للقائمة
+            taskList.appendChild(taskItem);
+
+            // مسح الخانة
+            taskInput.value = "";
+        } else {
+            alert("يرجى كتابة مهمة أولاً!");
+        }
+    });
+</script>
