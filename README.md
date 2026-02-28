@@ -62,30 +62,51 @@
     const addBtn = document.querySelector('.task-input button');
     const taskList = document.querySelector('.task-list');
 
-    // وظيفة إضافة مهمة
+    // 1. استرجاع المهام من الذاكرة عند فتح الصفحة
+    document.addEventListener('DOMContentLoaded', getTasks);
+
+    // 2. وظيفة إضافة مهمة
     addBtn.addEventListener('click', () => {
         const taskText = taskInput.value;
-
         if (taskText.trim() !== "") {
-            // إنشاء عنصر المهمة
-            const taskItem = document.createElement('div');
-            taskItem.classList.add('task-item');
-            
-            taskItem.innerHTML = `
-                <div>
-                    <strong>${taskText}</strong>
-                    <p style="margin: 5px 0 0; font-size: 0.8rem; color: #666;">الحالة: مضافة حديثاً</p>
-                </div>
-                <button class="delete-btn" onclick="this.parentElement.remove()">حذف</button>
-            `;
-
-            // إضافة المهمة للقائمة
-            taskList.appendChild(taskItem);
-
-            // مسح الخانة
+            createTaskElement(taskText);
+            saveLocalTask(taskText); // حفظ في الذاكرة
             taskInput.value = "";
-        } else {
-            alert("يرجى كتابة مهمة أولاً!");
         }
     });
+
+    // 3. إنشاء شكل المهمة في المتصفح
+    function createTaskElement(text) {
+        const taskItem = document.createElement('div');
+        taskItem.classList.add('task-item');
+        taskItem.innerHTML = `
+            <div>
+                <strong>${text}</strong>
+                <p style="margin: 5px 0 0; font-size: 0.8rem; color: #666;">الحالة: محفوظة</p>
+            </div>
+            <button class="delete-btn" onclick="removeTask(this, '${text}')">حذف</button>
+        `;
+        taskList.appendChild(taskItem);
+    }
+
+    // 4. حفظ المهمة في الذاكرة (LocalStorage)
+    function saveLocalTask(task) {
+        let tasks = localStorage.getItem("tasks") ? JSON.parse(localStorage.getItem("tasks")) : [];
+        tasks.push(task);
+        localStorage.setItem("tasks", JSON.stringify(tasks));
+    }
+
+    // 5. جلب المهام المخزنة وعرضها
+    function getTasks() {
+        let tasks = localStorage.getItem("tasks") ? JSON.parse(localStorage.getItem("tasks")) : [];
+        tasks.forEach(task => createTaskElement(task));
+    }
+
+    // 6. حذف المهمة من الشاشة والذاكرة
+    function removeTask(btn, taskText) {
+        btn.parentElement.remove();
+        let tasks = JSON.parse(localStorage.getItem("tasks"));
+        tasks = tasks.filter(t => t !== taskText);
+        localStorage.setItem("tasks", JSON.stringify(tasks));
+    }
 </script>
