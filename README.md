@@ -1,10 +1,38 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TechTask | Dashboard</title>
     <style>
+body { 
+    font-family: 'Tajawal', sans-serif; /* تغيير الخط */
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); /* خلفية متدرجة */
+}
+
+.task-item {
+    transition: transform 0.2s ease; /* تأثير عند ظهور المهمة */
+    border-right: 5px solid #27ae60;
+}
+
+.task-item:hover {
+    transform: scale(1.02); /* تكبير بسيط عند مرور الماوس */
+}
+
+.delete-btn {
+    background: #ff7675;
+    border-radius: 50%; /* زر دائري */
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+    
         :root {
             --primary: #2c3e50;
             --accent: #27ae60;
